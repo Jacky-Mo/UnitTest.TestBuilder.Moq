@@ -8,6 +8,7 @@
     <Description>A test library that helps to write unit tests faster by abstractin out the boilerplate codes and let the developers focus on the actual logics of the unit tests instead.</Description>
     <Authors>Jacky Mo</Authors>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

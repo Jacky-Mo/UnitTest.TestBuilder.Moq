@@ -67,6 +67,93 @@ public class TestClass
   }
 ```
 
+#### Examples
+
+> Check out the Examples in Unit Tests project for more details
+
+```C#
+    public interface IRateService
+    {
+        double GetRate();
+    }
+
+    public class RateCalculator
+    {
+        private readonly IRateService _rateService;
+
+        public RateCalculator(IRateService rateService)
+        {
+            _rateService = rateService;
+        }
+
+        public double GetTodayRate()
+        {
+            return 2 * _rateService.GetRate();
+        }
+
+        public double GetTomorrowRate()
+        {
+            return 3 * _rateService.GetRate();
+        }
+    }
+
+    [TestClass]
+    public class ExampleTests
+    {
+        private class Builder : MoqBuilder<RateCalculator>
+        {
+            // This property will be auto-populated by the base builder
+            public Mock<IRateService> RateService { get; private set; }
+
+            public Builder() : this(null) { }
+
+            public Builder(IContainer container) : base(container) { }
+        }
+
+        [TestMethod]
+        public void GetTodayRate_WithRate_ReturnCorrectRate()
+        {
+            //arrange
+            var builder = new Builder();
+
+            //set up the getRate method to return 2 and as verifable
+            builder.RateService.Setup(a => a.GetRate()).Returns(2).Verifiable(); 
+
+            //the calculator will get a reference to the same RateService in the builder
+            var calculator = builder.Build();
+
+            //act
+            var result = calculator.GetTodayRate();
+
+            //assert
+            Assert.AreEqual(4.0, result);
+
+            //verify RateService.GetRate() was called
+            builder.RateService.Verify();
+        }
+
+        [TestMethod]
+        public void GetTomorrowRate_WithRate_ReturnCorrectRate()
+        {
+            //arrange
+            var builder = new Builder();
+
+            //set up the getRate method to return 2 and as verifable
+            builder.RateService.Setup(a => a.GetRate()).Returns(2).Verifiable();
+
+            var calculator = builder.Build();
+
+            //act
+            var result = calculator.GetTomorrowRate();
+
+            //assert
+            Assert.AreEqual(6.0, result);
+
+            //verify RateService.GetRate() was called
+            builder.RateService.Verify();
+        }
+    }
+```
 <br>
 <br>
-Last Updated: 12/31/2019
+Last Updated: Jan-06-2020
