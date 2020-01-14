@@ -10,7 +10,7 @@ namespace UnitTest.TestBuilder.Moq.Test.Examples
         private class Builder : MoqBuilder<RateCalculator>
         {
             public Mock<IRateService> RateService { get; private set; }
-
+            public DefaultSetting DefaultSetting { get; private set; }
 
             public Builder() : this(null)
             {
@@ -33,9 +33,12 @@ namespace UnitTest.TestBuilder.Moq.Test.Examples
 
             var calculator = builder.Build();
 
+            //act
             var result = calculator.GetTodayRate();
 
+            //Assert
             Assert.AreEqual(4.0, result);
+            Assert.AreEqual(builder.DefaultSetting, calculator.DefaultSetting);
 
             //verify RateService.GetRate() was called
             builder.RateService.Verify();
@@ -51,9 +54,12 @@ namespace UnitTest.TestBuilder.Moq.Test.Examples
 
             var calculator = builder.Build();
 
+            //Act
             var result = calculator.GetTomorrowRate();
 
+            //Assert
             Assert.AreEqual(6.0, result);
+            Assert.AreEqual(builder.DefaultSetting, calculator.DefaultSetting);
 
             //verify RateService.GetRate() was called
             builder.RateService.Verify();

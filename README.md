@@ -17,10 +17,10 @@ public class TestClass
 ```
 
 2. Define class properties in the ***Builder*** class. 
-> All reference type properties except string will be dynamically created and assigned by ***MoqBuilder***.
+> All reference type properties including string will be dynamically created and assigned by ***MoqBuilder***.
 >
 > The ***TestObject*** is created using its public constructor that has the most parameters. If the parameter is the same type as any of the properties defined
-> in the ***Builder***, the property of the ***Builder*** will be passed in as the parameter to the constructor. Hence, the ***TestObject*** will have reference
+> in the ***Builder***, the property of the ***Builder*** will be passed in as the parameter to the constructor. Hence, the ***TestObject*** will have access
 > to the properties defined in the ***Builder***.
 
 ```C#
@@ -156,4 +156,4 @@ public class TestClass
 ```
 <br>
 <br>
-Last Updated: Jan-06-2020
+Last Updated: Jan-12-2020
